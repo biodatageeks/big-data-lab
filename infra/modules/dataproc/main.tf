@@ -37,7 +37,7 @@ resource "google_dataproc_cluster" "dataproc-cluster" {
       enable_http_port_access = "true"
     }
     software_config {
-      image_version = var.image_version
+      image_version       = var.image_version
       optional_components = ["JUPYTER"]
     }
     gce_cluster_config {

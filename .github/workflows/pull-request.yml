@@ -1,0 +1,26 @@
+---
+name: Tech Tests
+
+# Controls when the workflow will run
+on: [pull_request]
+permissions: read-all
+jobs:
+  iac_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.9.8
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: false
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color -compact-warnings | grep -v '^`'
+
